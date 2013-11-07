@@ -1,6 +1,8 @@
 package index;
 
-public class Posting {
+import java.io.Serializable;
+
+public class Posting implements Serializable {
 	public int docID, tf;
 	
 	public Posting(int docID, int tf){

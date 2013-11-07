@@ -1,9 +1,10 @@
 package index;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class PostingList extends ArrayList<Posting> {
+public class PostingList extends ArrayList<Posting> implements Serializable {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
