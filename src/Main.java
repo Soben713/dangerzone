@@ -2,6 +2,7 @@ import java.io.FileNotFoundException;
 
 import index.Index;
 
+import retrievalFactory.RetrievalManager;
 import tokenizer.Tokenizer;
 
 public class Main {
@@ -12,6 +13,9 @@ public class Main {
 //			System.out.println(tokenizer.next());
 		Index index = new Index("src/Data/Time Test Collection/Docs");
 		index.printDictionary();
-		index.printPostingList("their");
+		System.out.println("time:  "+ index.index.get("time"));
+		System.out.println("world:  "+index.index.get("world"));
+		RetrievalManager manager=new RetrievalManager(index);
+		manager.retrieve(0, 100, " Time World ");
 	}
 }
