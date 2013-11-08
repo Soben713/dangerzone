@@ -1,48 +1,35 @@
 package tokenizer;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Tokenizer {
-	private String document;
-	private int pointer = 0;
+	private String[] regex = {
+			"(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]", // Matches URL's
+			"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}", // Matches emails
+			"[a-zA-Z0-9.][a-zA-Z0-9.]+", //Tokens with at least 2 characters
+			"[a-zA-Z0-9]", //Tokens with only one character
+	};
+	private Pattern pattern;
+	private Matcher matcher;
+	int index = 0;
 
 	public Tokenizer(String document) {
-		this.document = document;
+		String reg = "";
+		for (int i = 0; i < regex.length; i++) {
+			reg += regex[i];
+			if (i != regex.length - 1)
+				reg += "|";
+		}
+		pattern = Pattern.compile(reg);
+		matcher = pattern.matcher(document);
 	}
 
 	public Boolean hasNext() {
-		for (int i = pointer; i < document.length(); i++) {
-			char c = document.charAt(i);
-			if ((c <= 'Z' && c >= 'A') || ('a' <= c && c <= 'z')
-					|| ('0' <= c && c <= '9')) {
-				return true;
-			}
-		}
-		return false;
+		return matcher.find();
 	}
 
 	public String next() {
-		String nextToken = "";
-		for (; pointer < document.length(); pointer++) {
-			char c = document.charAt(pointer);
-			if ((c >= 'A' && c <= 'Z') || ('a' <= c && c <= 'z')
-					|| ('0' <= c && c <= '9')) {
-				break;
-			}
-		}
-		for (int i = pointer - 1; i >= 0 && document.charAt(i) == '.'; i--) {
-			pointer--;
-		}
-		for (; pointer < document.length(); pointer++) {
-			char c = document.charAt(pointer);
-
-			if (c >= 'A' && c <= 'Z')
-				nextToken += (char) (c + ('a' - 'A'));
-			else if ((c >= 'a' && c <= 'z') || ('0' <= c && c <= '9')
-					|| c == '.' || c == '@')
-				nextToken += c;
-			else {
-				break;
-			}
-		}
-		return nextToken;
+		return "'" + matcher.group() + "'";
 	}
 }
