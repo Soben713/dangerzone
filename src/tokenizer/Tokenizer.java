@@ -30,6 +30,6 @@ public class Tokenizer {
 	}
 
 	public String next() {
-		return "'" + matcher.group() + "'";
+		return matcher.group().toLowerCase();
 	}
 }

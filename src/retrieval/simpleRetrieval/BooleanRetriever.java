@@ -1,10 +1,7 @@
 package retrieval.simpleRetrieval;
 
 import java.util.ArrayList;
-
-import retrieval.Retriever;
 import index.Index;
-import index.PostingList;
 
 public class BooleanRetriever extends SimpleRetriever {
 

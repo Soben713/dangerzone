@@ -1,6 +1,5 @@
 package retrieval.complexRetrieval;
 
-import retrieval.Retriever;
 import index.Index;
 
 public class LnnLtnRetriever extends ComplexRetriever{

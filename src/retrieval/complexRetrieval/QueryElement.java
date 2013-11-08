@@ -1,12 +1,13 @@
 package retrieval.complexRetrieval;
 
 public class QueryElement {
-	public QueryElement(String name, int counter) {
+	public QueryElement(String name, double tfIdf) {
 		this.name=name;
-		this.tf=counter;
+		this.tfIdf=tfIdf;
 	}
 	String name;
-	int tf;
+	double tfIdf;
+	double lenght;
 }
 
 

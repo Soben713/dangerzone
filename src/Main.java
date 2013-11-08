@@ -11,17 +11,13 @@ public class Main {
 //		Tokenizer tokenizer = new Tokenizer("salam soheil khoobi");
 //		while(tokenizer.hasNext())
 //			System.out.println(tokenizer.next());
-		
-		Tokenizer t = new Tokenizer("http://soheil :D hello.world 2infinity www . soheil . com salam soheil xubi. chetori soheil.behnezhad@gmail.com www.soheil.com");
-		while(t.hasNext())
-			System.out.println(t.next());
-		
-//		Index index = new Index("src/Data/Time Test Collection/Docs");
-//		index.printDictionary();
-//		System.out.println("man:  "+ index.index.get("man"));
-//		System.out.println("Time:  "+index.index.get("time"));
-//		System.out.println("fast:    "+index.index.get("fast"));
-//		Manager manager=new Manager(index);
-//		manager.retrieve(3, 300, " man Time fast");
+
+		Index index = new Index("src/Data/Time Test Collection/Docs");
+		index.printDictionary();
+		System.out.println("man:  "+ index.index.get("man"));
+		System.out.println("Time:  "+index.index.get("time"));
+		System.out.println("fast:    "+index.index.get("fast"));
+		Manager manager=new Manager(index);
+		manager.retrieve(4, 300, " MAN  Time  fast fast ");
 	}
 }
