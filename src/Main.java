@@ -2,7 +2,7 @@ import java.io.FileNotFoundException;
 
 import index.Index;
 
-import retrievalFactory.RetrievalManager;
+import retrieval.Manager;
 import tokenizer.Tokenizer;
 
 public class Main {
@@ -16,7 +16,7 @@ public class Main {
 		System.out.println("man:  "+ index.index.get("man"));
 		System.out.println("Time:  "+index.index.get("time"));
 		System.out.println("fast:    "+index.index.get("fast"));
-		RetrievalManager manager=new RetrievalManager(index);
+		Manager manager=new Manager(index);
 		manager.retrieve(3, 300, " man Time fast");
 	}
 }

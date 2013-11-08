@@ -1,11 +1,11 @@
 package retrieval.complexRetrieval;
 
-import retrieval.Retrieval;
+import retrieval.Retriever;
 import index.Index;
 
-public class LncLtcRetrieval extends ComplexRetrieval{
+public class LncLtcRetriever extends ComplexRetriever{
 
-	public LncLtcRetrieval(Index index) {
+	public LncLtcRetriever(Index index) {
 		super(index);
 		// TODO Auto-generated constructor stub
 	}

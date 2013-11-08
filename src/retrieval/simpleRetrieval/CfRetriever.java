@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import retrieval.Retrieval;
+import retrieval.Retriever;
 
 import index.Index;
 import index.PostingList;
 
-public class CfRetrieval extends simpleRetrieval{
+public class CfRetriever extends SimpleRetriever{
 
-	public CfRetrieval(Index index) {
+	public CfRetriever(Index index) {
 		super(index);
 	}
 	public void updateDocsInfo(int pl, int tf){

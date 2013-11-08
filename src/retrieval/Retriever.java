@@ -11,13 +11,13 @@ import java.util.Comparator;
 
 import tokenizer.Tokenizer;
 
-public class Retrieval {
+public abstract class Retriever {
 	protected int docsNum;
 	protected String query;
 	protected Index index;
 	protected ArrayList<String> queryTokens=new ArrayList<String>(); 
 
-	public Retrieval(Index index) {
+	public Retriever(Index index) {
 		this.index=index;
 	}
 	
