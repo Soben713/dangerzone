@@ -29,11 +29,9 @@ public class Index implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public SortedMap<String, PostingList> index = new TreeMap<String, PostingList>();
+	public Map<String, Double> idf = new HashMap<String, Double>();
+	public Map<Integer, Double> docVectorLen = new HashMap<Integer, Double>();
 	public int docsCounter = 0;
-
-	public Index() {
-		// No argument constructor, mostly used to save/load data.
-	}
 
 	public Index(String path) throws FileNotFoundException {
 		/*
@@ -52,6 +50,21 @@ public class Index implements Serializable {
 			// Index the given document
 			indexDocument(file);
 		}
+		
+		double N = (double)(index.keySet().size());
+		for(String term: index.keySet()){
+			//Set idf
+			double df = (double)(index.get(term).size());
+			idf.put(term,  N/df);
+			
+			//Set docVectorLen
+			for(int i=0; i<index.get(term).size(); i++){
+				Posting p = index.get(term).get(i);
+				docVectorLen.put(p.docID, docVectorLen.get(p.docID) + Math.pow(p.tf, 2));
+			}
+		}
+		for(Integer docID: docVectorLen.keySet())
+			docVectorLen.put(docID, Math.sqrt(docVectorLen.get(docID)));
 	}
 
 	public void updatePostingList(String token, int docID) {

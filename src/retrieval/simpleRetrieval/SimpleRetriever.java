@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import retrieval.Query;
 import retrieval.Retriever;
 
 public class SimpleRetriever extends Retriever {
@@ -18,10 +19,9 @@ public class SimpleRetriever extends Retriever {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ArrayList<Integer>  retrieve(int docsNum, String query) {
-		preprocess(docsNum, query);
-		for (int i = 0; i < queryTokens.size(); i++) {
-			PostingList postingList = index.index.get(queryTokens.get(i));
+	public ArrayList<Integer> retrieve(int docsNum, Query query) {
+		for (int i = 0; i < query.tokens.size(); i++) {
+			PostingList postingList = index.index.get(query.tokens.get(i));
 			for (int j = 0; postingList != null && j < postingList.size(); j++) {
 				int pl = postingList.get(j).docID;
 				for (int k = docsInfo.size(); docsInfo.size() <= pl; k++) {
@@ -37,11 +37,8 @@ public class SimpleRetriever extends Retriever {
 				return (p2.info).compareTo(p1.info);
 			}
 		});
-		return outputMaker();
-	}
 
-	protected ArrayList<Integer> outputMaker() {
-		ArrayList<Integer> output= new ArrayList<Integer>();
+		ArrayList<Integer> output = new ArrayList<Integer>();
 		for (int i = 0; i < docsNum && i < docsInfo.size()
 				&& docsInfo.get(i).info != 0; i++) {
 			output.add(docsInfo.get(i).docID);
