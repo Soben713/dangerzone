@@ -18,7 +18,7 @@ public class SimpleRetriever extends Retriever {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void retrieve(int docsNum, String query) {
+	public ArrayList<Integer>  retrieve(int docsNum, String query) {
 		preprocess(docsNum, query);
 		for (int i = 0; i < queryTokens.size(); i++) {
 			PostingList postingList = index.index.get(queryTokens.get(i));
@@ -37,15 +37,16 @@ public class SimpleRetriever extends Retriever {
 				return (p2.info).compareTo(p1.info);
 			}
 		});
-		outputWriter();
+		return outputMaker();
 	}
 
-	protected void outputWriter() {
+	protected ArrayList<Integer> outputMaker() {
+		ArrayList<Integer> output= new ArrayList<Integer>();
 		for (int i = 0; i < docsNum && i < docsInfo.size()
 				&& docsInfo.get(i).info != 0; i++) {
-			System.out.print(docsInfo.get(i).docID + ": "
-					+ docsInfo.get(i).info + ",  ");
+			output.add(docsInfo.get(i).docID);
 		}
+		return output;
 	}
 
 	protected void updateDocsInfo(int pl, int tf) {

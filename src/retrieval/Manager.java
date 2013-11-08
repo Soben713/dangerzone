@@ -1,5 +1,9 @@
 package retrieval;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+
 import index.Index;
 import retrieval.complexRetrieval.LncLtcRetriever;
 import retrieval.complexRetrieval.LnnLtnRetriever;
@@ -9,30 +13,37 @@ import retrieval.simpleRetrieval.DfRetriever;
 
 public class Manager {
 	Retriever retriever0, retriever1, retriever2, retriever3, retriever4;
-	public Manager(Index index ){
+	public Manager(String path ) throws FileNotFoundException{
+		Index index = null;
+		File file = new File(path);
+		if (file.isDirectory()) {
+			index=new Index(path);
+		}
+		else{
+			index=Index.load(path);
+		}
         retriever0=new BooleanRetriever(index);
     	retriever1=new DfRetriever(index);
     	retriever2=new CfRetriever(index);
     	retriever3=new LnnLtnRetriever(index);
     	retriever4=new LncLtcRetriever(index);
 	}
-	public void retrieve(int model, int docsNum, String query ){
+	public ArrayList<Integer> retrieve(int model, int docsNum, String query ){
 		switch(model) {
 	    case 0:
-	        retriever0.retrieve(docsNum, query);
-	        break;
+	        return retriever0.retrieve(docsNum, query);
 	    case 1:
-	    	retriever1.retrieve(docsNum, query);
-	        break;
+	    	return retriever1.retrieve(docsNum, query);
+	      
 	    case 2:
-	    	retriever2.retrieve(docsNum, query);
-	    	break;
+	    	return retriever2.retrieve(docsNum, query);
 	    case 3:
-	    	retriever3.retrieve(docsNum, query);
-	    	break;
+	    	return retriever3.retrieve(docsNum, query);
+	    
 	    case 4:
-	    	retriever4.retrieve(docsNum, query);
-	    	break;
+	    	return retriever4.retrieve(docsNum, query);
+	   
 		}
+		return null;
 	}
 }

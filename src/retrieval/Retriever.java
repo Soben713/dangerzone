@@ -35,8 +35,8 @@ public abstract class Retriever {
 		}
 	}
 
-	public void retrieve(int docsNum2, String query2) {
+	public ArrayList<Integer>  retrieve(int docsNum2, String query2) {
+		return null;
 		// TODO Auto-generated method stub
-		
 	}
 }

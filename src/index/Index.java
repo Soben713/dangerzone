@@ -21,6 +21,7 @@ import java.util.TreeMap;
 import tokenizer.Tokenizer;
 import utils.FileComparator;
 
+
 public class Index implements Serializable {
 	/**
 	 * 

@@ -18,7 +18,7 @@ public class ComplexRetriever extends Retriever {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void retrieve(int docsNum, String query) {
+	public ArrayList<Integer>  retrieve(int docsNum, String query) {
 		preprocess(docsNum, query);
 		makeQueryVector();
 		for (int i = 0; i < queryVector.size(); i++) {
@@ -42,18 +42,21 @@ public class ComplexRetriever extends Retriever {
 
 			}
 		});
-		outputWriter();
+		return outputMaker();
+
 	}
 
 	protected void normalize() {
 		//Nothing
 	}
 
-	private void outputWriter() {
+	private ArrayList<Integer> outputMaker() {
+		ArrayList<Integer> output=new ArrayList<Integer> ();
 		for (int i = 0; i < docsVector.size() && i < docsNum
 				&& docsVector.get(i).similarity != (double) 0; i++) {
-					System.out.print(docsVector.get(i).ID + ": "	+ docsVector.get(i).similarity + ",  ");
+					output.add(docsVector.get(i).ID);
 		}
+		return output;
 	}
 
 	private void makeQueryVector() {

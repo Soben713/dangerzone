@@ -14,9 +14,7 @@ public class LncLtcRetriever extends ComplexRetriever{
 			DocElement element= docsVector.get(i);
 			element.similarity=element.similarity/(Math.sqrt(element.Sqrlenght) * this.queryLength);
 			docsVector.set(i,element);
-			if(i==273 || i==230){
-				System.out.println("DocLength"+i+": "+Math.sqrt(docsVector.get(i).Sqrlenght));
-			}
+			
 		}
 	}
 }
