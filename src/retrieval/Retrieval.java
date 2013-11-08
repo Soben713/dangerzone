@@ -2,7 +2,12 @@ package retrieval;
 
 import index.Index;
 
+import index.PostingList;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 
 import tokenizer.Tokenizer;
 
@@ -16,7 +21,7 @@ public class Retrieval {
 		this.index=index;
 	}
 	
-	protected void preProsess(int docsNum, String query) {
+	protected void preprocess(int docsNum, String query) {
 		this.docsNum=docsNum;
 		this.query=query;
 		tokenize();
@@ -30,5 +35,8 @@ public class Retrieval {
 		}
 	}
 
-	public void retrieve(int docsNum2, String query2) {}
+	public void retrieve(int docsNum2, String query2) {
+		// TODO Auto-generated method stub
+		
+	}
 }

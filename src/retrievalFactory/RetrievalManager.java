@@ -1,12 +1,12 @@
 package retrievalFactory;
 
 import index.Index;
-import retrieval.BooleanRetrieval;
-import retrieval.CfRetrieval;
-import retrieval.DfRetrieval;
-import retrieval.LncLtcRetrieval;
-import retrieval.LnnLtnRetrieval;
 import retrieval.Retrieval;
+import retrieval.complexRetrieval.LncLtcRetrieval;
+import retrieval.complexRetrieval.LnnLtnRetrieval;
+import retrieval.simpleRetrieval.BooleanRetrieval;
+import retrieval.simpleRetrieval.CfRetrieval;
+import retrieval.simpleRetrieval.DfRetrieval;
 
 public class RetrievalManager {
 	Retrieval retrieval0, retrieval1, retrieval2, retrieval3, retrieval4;

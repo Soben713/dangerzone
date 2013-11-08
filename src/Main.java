@@ -13,9 +13,10 @@ public class Main {
 //			System.out.println(tokenizer.next());
 		Index index = new Index("src/Data/Time Test Collection/Docs");
 		index.printDictionary();
-		System.out.println("time:  "+ index.index.get("time"));
-		System.out.println("world:  "+index.index.get("world"));
+		System.out.println("man:  "+ index.index.get("man"));
+		System.out.println("Time:  "+index.index.get("time"));
+		System.out.println("fast:    "+index.index.get("fast"));
 		RetrievalManager manager=new RetrievalManager(index);
-		manager.retrieve(0, 100, " Time World ");
+		manager.retrieve(3, 300, " man Time fast");
 	}
 }
