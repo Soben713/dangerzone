@@ -19,6 +19,10 @@ public class SimpleRetriever extends Retriever {
 		// TODO Auto-generated constructor stub
 	}
 
+	public void updateDocsInfos(Query query){
+		
+	}
+	
 	public ArrayList<Integer> retrieve(int docsNum, Query query) {
 		for (int i = 0; i < query.tokens.size(); i++) {
 			PostingList postingList = index.index.get(query.tokens.get(i));
@@ -37,7 +41,9 @@ public class SimpleRetriever extends Retriever {
 				return (p2.info).compareTo(p1.info);
 			}
 		});
-
+		
+		updateDocsInfos(query);
+		
 		ArrayList<Integer> output = new ArrayList<Integer>();
 		for (int i = 0; i < docsNum && i < docsInfo.size()
 				&& docsInfo.get(i).info != 0; i++) {

@@ -13,9 +13,10 @@ import retrieval.vectorSpaceRetrieval.LNNLTNRetriever;
 
 public class Manager {
 	Retriever retriever0, retriever1, retriever2, retriever3, retriever4;
+	public Index index;
 
 	public Manager(String path) throws FileNotFoundException {
-		Index index = null;
+		index = null;
 		File file = new File(path);
 		if (file.isDirectory()) {
 			index = new Index(path);
@@ -29,22 +30,26 @@ public class Manager {
 		retriever4 = new LNCLTCRetriever(index);
 	}
 
-	public ArrayList<Integer> retrieve(int model, int docsNum, String query) {
-		Query q = new Query(query);
+	public ArrayList<Integer> retrieve(int model, int docsNum, Query query) {
 		switch (model) {
 		case 0:
-			return retriever0.retrieve(docsNum, q);
+			return retriever0.retrieve(docsNum, query);
 		case 1:
-			return retriever1.retrieve(docsNum, q);
+			return retriever1.retrieve(docsNum, query);
 
 		case 2:
-			return retriever2.retrieve(docsNum, q);
+			return retriever2.retrieve(docsNum, query);
 		case 3:
-			return retriever3.retrieve(docsNum, q);
+			return retriever3.retrieve(docsNum, query);
 
 		case 4:
-			return retriever4.retrieve(docsNum, q);
+			return retriever4.retrieve(docsNum, query);
 		}
 		return null;
+	}
+	
+	public ArrayList<Integer> retrieve(int model, int docsNum, String query) {
+		Query q = new Query(query);
+		return retrieve(model, docsNum, q);
 	}
 }

@@ -44,7 +44,6 @@ public class Index implements Serializable {
 			Arrays.sort(docs, new FileComparator());
 			for (int i = 0; i < docs.length; i++) {
 				indexDocument(docs[i]);
-				System.out.println(docs[i].getName());
 			}
 		} else {
 			// Index the given document
@@ -60,7 +59,10 @@ public class Index implements Serializable {
 			//Set docVectorLen
 			for(int i=0; i<index.get(term).size(); i++){
 				Posting p = index.get(term).get(i);
-				docVectorLen.put(p.docID, docVectorLen.get(p.docID) + Math.pow(p.tf, 2));
+				if(docVectorLen.containsKey(p.docID))
+					docVectorLen.put(p.docID, docVectorLen.get(p.docID) + Math.pow(p.tf, 2));
+				else
+					docVectorLen.put(p.docID, Math.pow(p.tf, 2));
 			}
 		}
 		for(Integer docID: docVectorLen.keySet())

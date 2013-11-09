@@ -18,8 +18,12 @@ public class QueryVector{
 				this.field.put(term, 1.0);
 		}
 		for(String term: field.keySet()){
-			double tf = 1 + Math.log(this.field.get(term));
-			double idf = index.idf.get(term);
+			double tf = 1.0 + Math.log(this.field.get(term));
+			double idf;
+			if(index.idf.containsKey(term))
+				idf = index.idf.get(term);
+			else 
+				idf = index.index.keySet().size(); // not really important
 			this.field.put(term,  tf*idf);
 		}
 	}

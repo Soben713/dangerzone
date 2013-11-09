@@ -29,5 +29,5 @@ public class Query {
 		Tokenizer tokenizer = new Tokenizer(query);
 		while (tokenizer.hasNext())
 			tokens.add(tokenizer.next());
-	}	
+	}
 }
