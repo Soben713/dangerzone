@@ -21,6 +21,7 @@ public class Evaluator {
 	SortedMap<Integer, ArrayList<Integer>> relevantsOf = new TreeMap<Integer, ArrayList<Integer>>();
 	double[] recall = new double[6];
 	double[] precision = new double[6];
+	double[] map = new double[6];
 	Manager retManager;
 
 	public Evaluator(String docsPath, String queriesPath, String relevantsPath)
@@ -60,7 +61,11 @@ public class Evaluator {
 		for(int i=0; i<5; i++){
 			recall[i] /= queries.size();
 			precision[i] /= queries.size();
-			System.out.println("Model " + i + ": R="+recall[i]+ " P=" + precision[i]);
+			map[i] /= queries.size();
+			String out = "Model " + i + ": R="+recall[i]+ " P=" + precision[i];
+			if(i!=0)
+				out+= " MAP=" + map[i];
+			System.out.println(out);
 		}
 	}
 
@@ -69,17 +74,28 @@ public class Evaluator {
 			return;
 		int tp=0;
 		for(int i=0; i<docs.size(); i++){
-			if(relevantsOf.get(qind).contains(docs.get(i)))
+			if(relevantsOf.get(qind).contains(docs.get(i))){
 				tp++;
+				if(docs.size() > 0)
+					map[model] += (double)(tp) / docs.size();
+				else
+					map[model] += 1;
+			}
 		}
-		if(relevantsOf.get(qind).size() > 0)
+		//
+		if(relevantsOf.get(qind).size() > 0){
 			recall[model] += (double)(tp) / (double)(relevantsOf.get(qind).size());
-		else
+			map[model] /= (double)(relevantsOf.get(qind).size());
+		}
+		else{
 			recall[model] += 1;
-			
+			map[model] = 1;
+		}
+		//
 		if(docs.size() > 0)
 			precision[model] += (double)(tp) / docs.size();
 		else
 			precision[model] += 1;
+		//
 	}
 }

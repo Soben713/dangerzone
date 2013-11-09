@@ -50,11 +50,11 @@ public class Index implements Serializable {
 			indexDocument(file);
 		}
 		
-		double N = (double)(index.keySet().size());
+		double N = (double)(docsCounter);
 		for(String term: index.keySet()){
 			//Set idf
 			double df = (double)(index.get(term).size());
-			idf.put(term,  N/df);
+			idf.put(term,  Math.log(N/df));
 			
 			//Set docVectorLen
 			for(int i=0; i<index.get(term).size(); i++){

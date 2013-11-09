@@ -25,7 +25,7 @@ public class Query {
 			tokens.add(tokenizer.next());
 	}
 
-	public Query(String query) {
+	public Query(String query){
 		Tokenizer tokenizer = new Tokenizer(query);
 		while (tokenizer.hasNext())
 			tokens.add(tokenizer.next());
