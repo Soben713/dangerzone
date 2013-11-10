@@ -54,15 +54,15 @@ public class Index implements Serializable {
 		for(String term: index.keySet()){
 			//Set idf
 			double df = (double)(index.get(term).size());
-			idf.put(term,  Math.log(N/df));
+			idf.put(term,  Math.log10(N/df));
 			
 			//Set docVectorLen
 			for(int i=0; i<index.get(term).size(); i++){
 				Posting p = index.get(term).get(i);
 				if(docVectorLen.containsKey(p.docID))
-					docVectorLen.put(p.docID, docVectorLen.get(p.docID) + Math.pow(p.tf, 2));
+					docVectorLen.put(p.docID, docVectorLen.get(p.docID) + Math.pow(1 + Math.log10(p.tf), 2));
 				else
-					docVectorLen.put(p.docID, Math.pow(p.tf, 2));
+					docVectorLen.put(p.docID, Math.pow(1 + Math.log10(p.tf), 2));
 			}
 		}
 		for(Integer docID: docVectorLen.keySet())

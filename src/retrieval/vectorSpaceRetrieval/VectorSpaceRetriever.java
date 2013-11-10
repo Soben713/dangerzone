@@ -10,6 +10,7 @@ import java.util.Map;
 
 import retrieval.Query;
 import retrieval.Retriever;
+import utils.SortHashMapByValue;
 
 public class VectorSpaceRetriever extends Retriever {
 
@@ -18,31 +19,11 @@ public class VectorSpaceRetriever extends Retriever {
 		// TODO Auto-generated constructor stub
 	}
 
-	class Pair implements Comparable<Pair> {
-		int docID;
-		double score;
-
-		public Pair(int docID, double score) {
-			this.docID = docID;
-			this.score = score;
-		}
-
-		@Override
-		public int compareTo(Pair o) {
-			return Double.compare(this.score, o.score);
-		}
-		
-		@Override
-		public String toString() {
-			return Integer.toString(docID) + " " + Double.toString(score);
-		}
-	}
-
 	public void normalizeQuery(QueryVector qv) {
 
 	}
 
-	public void normalizeScores(Map<Integer, Pair> score) {
+	public void normalizeScores(Map<Integer, Double> score) {
 
 	}
 
@@ -50,31 +31,23 @@ public class VectorSpaceRetriever extends Retriever {
 		QueryVector queryVector = new QueryVector(query, index);
 		this.normalizeQuery(queryVector);
 
-		Map<Integer, Pair> score = new HashMap<Integer, Pair>();
+		Map<Integer, Double> score = new HashMap<Integer, Double>();
 
 		for (int i = 0; i < query.tokens.size(); i++) {
 			String token = query.tokens.get(i);
 			if (index.index.containsKey(token))
 				for (int j = 0; j < index.index.get(token).size(); j++) {
 					Posting p = index.index.get(token).get(j);
-					double prevScore = (score.containsKey(p.docID) ? score.get(p.docID).score : 0.0);
+					double prevScore = (score.containsKey(p.docID) ? score.get(p.docID) : 0.0);
 					double qw = queryVector.field.get(token);
-					score.put(p.docID, new Pair(p.docID, 
-							(1.0 + Math.log(p.tf)) * qw + prevScore));
+					score.put(p.docID, (1.0 + Math.log10(p.tf)) * qw + prevScore);
 				}
 		}
 
 		this.normalizeScores(score);
 
-		ArrayList<Pair> mapValues = new ArrayList<Pair>(score.values());
-		Collections.sort(mapValues);
-		Collections.reverse(mapValues);
-
-		ArrayList<Integer> ret = new ArrayList<Integer>();
-		for (int i = 0; i < docsNum && i < mapValues.size(); i++)
-			ret.add(mapValues.get(i).docID);
-
-		return ret;
+		ArrayList<Integer> docs = SortHashMapByValue.getKeysSorted(score, docsNum);
+		return docs;
 	}
 
 }

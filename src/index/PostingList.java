@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class PostingList extends ArrayList<Posting> implements Serializable {
+public class PostingList extends ArrayList<Posting> implements Serializable, Comparable<PostingList> {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
@@ -29,5 +29,17 @@ public class PostingList extends ArrayList<Posting> implements Serializable {
 			Collections.swap(this, i - 1, i);
 		}
 		return true;
+	}
+	
+	public int sum(){
+		int ret=0;
+		for(int i=0; i<size(); i++){
+			ret+=this.get(i).tf;
+		}
+		return ret;
+	}
+	@Override
+	public int compareTo(PostingList arg0) {
+		return Integer.compare(sum(), arg0.sum());
 	}
 }

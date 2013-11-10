@@ -73,24 +73,27 @@ public class Evaluator {
 		if(!relevantsOf.containsKey(qind))
 			return;
 		int tp=0;
+		double tmpmap = 0.0;
 		for(int i=0; i<docs.size(); i++){
 			if(relevantsOf.get(qind).contains(docs.get(i))){
 				tp++;
 				if(docs.size() > 0)
-					map[model] += (double)(tp) / docs.size();
+					tmpmap += (double)(tp) / (i+1);
 				else
-					map[model] += 1;
+					tmpmap += 1;
 			}
 		}
 		//
 		if(relevantsOf.get(qind).size() > 0){
+			Object o = relevantsOf.get(qind);
 			recall[model] += (double)(tp) / (double)(relevantsOf.get(qind).size());
-			map[model] /= (double)(relevantsOf.get(qind).size());
+			tmpmap /= (double)(relevantsOf.get(qind).size());
 		}
 		else{
 			recall[model] += 1;
-			map[model] = 1;
+			tmpmap = 1;
 		}
+		map[model]+=tmpmap;
 		//
 		if(docs.size() > 0)
 			precision[model] += (double)(tp) / docs.size();

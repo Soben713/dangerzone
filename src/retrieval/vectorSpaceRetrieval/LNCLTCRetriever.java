@@ -14,9 +14,9 @@ public class LNCLTCRetriever extends VectorSpaceRetriever {
 		qv.normalize();
 	}
 
-	public void normalizeScores(Map<Integer, Pair> score) {
+	public void normalizeScores(Map<Integer, Double> score) {
 		for (int docID : score.keySet()) {
-			score.put(docID, new Pair(docID, score.get(docID).score / index.docVectorLen.get(docID)));
+			score.put(docID, score.get(docID) / index.docVectorLen.get(docID));
 		}
 	}
 }

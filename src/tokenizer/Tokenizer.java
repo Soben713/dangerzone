@@ -2,6 +2,7 @@ package tokenizer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -16,7 +17,6 @@ import utils.SortHashMapByValue;
 
 
 public class Tokenizer {
-	private static final int MAXBIWORDS = 1000;
 	private String[] regex = {
 			"(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]", // Matches URL's
 			"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}", // Matches emails
@@ -29,10 +29,8 @@ public class Tokenizer {
 	Set<String> stopWords=new HashSet<String>();
 	private int counter=0;
 	ArrayList<String> tokens= new ArrayList<String>();
-	Map<String, Integer> biwordsFq = new HashMap<String, Integer>();
-	ArrayList<String> commonBiwords = new ArrayList<String>();
 	
-	public Tokenizer(String document, boolean biwords){
+	public Tokenizer(String document){
 		String reg = "";
 		for (int i = 0; i < regex.length; i++) {
 			reg += regex[i];
@@ -41,14 +39,10 @@ public class Tokenizer {
 		}
 		pattern = Pattern.compile(reg);
 		matcher = pattern.matcher(document);
-		preprocess(biwords);
+		preprocess();
 	}
 	
-	public Tokenizer(String document){
-		this(document, false);
-	}
-
-	private void preprocess(boolean biwords) {
+	protected void preprocess() {
 		try{
 			Scanner scanner = new Scanner(new File("src/Data/Time Test Collection/Stopword List/stopword"));
 			while (scanner.hasNextLine()){
@@ -62,14 +56,7 @@ public class Tokenizer {
 					tokens.add(word);
 				}
 			}
-			for(int i=0; i<tokens.size()-1; i++){
-				Integer prev = biwordsFq.get(tokens.get(i) + " " + tokens.get(i+1));
-				prev = (prev == null ? 0 : prev);
-				biwordsFq.put(tokens.get(i) + " " + tokens.get(i+1), prev+1);
-			}
-//	        commonBiwords = SortHashMapByValue.getKeysSorted(biwordsFq).subList(0, MAXBIWORDS);
-	        
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.err.println("NO STOPWORD");
 		}
 	}
